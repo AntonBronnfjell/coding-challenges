@@ -16,7 +16,52 @@
 // external libraries.
 
 function deepEqual(obj1, obj2) {
+    let obj1Array = toArray(obj1).sort(),
+        obj2Array = toArray(obj2).sort();
 
+    console.log(obj1Array, obj2Array);
+    console.log(arrayEquals(obj1Array, obj2Array));
+    return arrayEquals(obj1Array, obj2Array);
+}
+
+function toArray(object) {
+    let objectArray = [];
+
+    if (typeof object === 'number') {
+        objectArray.push(object)
+    }
+
+    for (const [key, value] of Object.entries(object)) {
+        if (key) {
+            objectArray.push(key.toString());
+        }
+
+        if ((typeof value === 'object' && value != null) || Array.isArray(value)) {
+            objectArray.push(toArray(value));
+        }
+        else {
+            objectArray.push(value);
+        }
+    }
+
+    return objectArray;
+}
+
+function arrayEquals(obj1, obj2) {
+    if (!Array.isArray(obj1) || !Array.isArray(obj2)) {
+        return false;
+    }
+
+    if (obj1.length !== obj2.length) {
+        return false;
+    }
+
+    return obj1.every((val, index) => {
+        if (Array.isArray(val) && Array.isArray(obj2[index])) {
+            return arrayEquals(val, obj2[index]);
+        }
+        return val === obj2[index];
+    });
 }
 
 // Inputs
