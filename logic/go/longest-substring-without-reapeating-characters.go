@@ -22,5 +22,34 @@ func main() {
 }
 
 func lengthOfLongestSubstring(text string) int {
+	var substring []string
+	var existing []string
 
+	if len(text) == 0 {
+		fmt.Print("\n", 0, " ", substring)
+		return 0
+	}
+
+	for _, character := range text {
+		if !contains(substring, string(character)) {
+			existing = append(existing, string(character))
+			if len(existing) >= len(substring) {
+				substring = existing
+			}
+		} else {
+			existing = existing[:0]
+		}
+	}
+
+	fmt.Print("\n", len(substring), " ", substring)
+	return len(substring)
+}
+
+func contains(slice []string, item string) bool {
+    for _, element := range slice {
+        if element == item {
+            return true
+        }
+    }
+    return false
 }
