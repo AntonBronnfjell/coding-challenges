@@ -26,7 +26,27 @@ words = [
     ]
 
 def find_anagrams(target: str, words: list[str]) -> list[str]:
-    
+    result = []
+
+    for word in words:
+        anagram = True
+        for character in word:
+            if character not in target:
+                anagram = False
+        if anagram:
+            result.append(word)
+    return result
+    #pass
+
+def find_anagrams_improved(target: str, words: list[str]):
+    result = []
+    sorted_target = sorted(target)
+
+    for word in words:
+        if word != target and sorted(word) == sorted_target:
+            result.append(word)
+
+    return result
 
 
 print(find_anagrams(target, words))
