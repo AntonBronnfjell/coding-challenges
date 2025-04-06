@@ -23,5 +23,22 @@ fn main() {
 }
 
 fn is_valid(text: String) -> bool {
+    let mut auxiliar = vec![];
 
+    for character in text.chars() {
+        match character {
+            '(' | '{' | '[' => {
+                auxiliar.push(character);
+            },
+            bracket if (bracket == ')' && auxiliar.last() != Some(&'('))
+                || (bracket == '}' && auxiliar.last() != Some(&'{'))
+                || (bracket == ']' && auxiliar.last() != Some(&'[')) => {
+                println!("{}", false);
+                return false;
+            },
+            _ => { auxiliar.pop(); },
+        }
+    }
+    println!("{}", auxiliar.is_empty());
+    return auxiliar.is_empty();
 }
