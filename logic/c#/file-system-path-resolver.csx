@@ -28,7 +28,24 @@ using System;
 
 static string SimplifyPath(string path)
 {
+    string[] folders = path.Split("/");
+    List<string> directory = new List<string>();
 
+    foreach(var folder in folders)
+    {
+        if(folder == ".." && directory.Count != 0)
+        {
+            directory.RemoveAt(directory.Count - 1);
+        }
+
+        if (folder != "." && folder != ".." && folder != "")
+        {
+            directory.Add(folder);
+        }
+    }
+
+    Console.WriteLine(String.Format("/{0}", String.Join("/", directory)));
+    return String.Format("/{0}", String.Join("/", directory));
 }
 
 SimplifyPath("/home/");                // "/home"
