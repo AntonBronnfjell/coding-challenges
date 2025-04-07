@@ -20,16 +20,27 @@
 //
 
 function flattenArray(arr: any[]): any[] {
-    return [];
+    let flatArray: any[] = [];
+    arr.forEach(value => {
+        if (Array.isArray(value)) {
+            flatArray = flatArray.concat(flattenArray(value));
+        } else {
+            flatArray.push(value);
+        }
+    });
+    return flatArray;
 }
 
-
 // Examples:
+console.log(flattenArray([1, [2, 3], [4, [5, 6]]]));
 flattenArray([1, [2, 3], [4, [5, 6]]])
 // Output: [1, 2, 3, 4, 5, 6]
 
+console.log(flattenArray([[["a"]], [["b"]]]));
 flattenArray([[["a"]], [["b"]]])
 // Output: ["a", "b"]
 
+
+console.log(flattenArray([1, [2, [3, [4]], 5]]));
 flattenArray([1, [2, [3, [4]], 5]])
 // Output: [1, 2, 3, 4, 5]
